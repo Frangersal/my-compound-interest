@@ -1,3 +1,7 @@
+.title{
+    margin-bottom: 2rem!important;
+}
+
 .input-group select option {
     background: #e0e5ec;
     color: #555;
@@ -22,7 +26,7 @@
     background: #e0e5ec;
     border: none;
     border-radius: 40px;
-    padding: 0.7rem 1rem 0.7rem 1rem;
+    padding: 8px 12.8px;
     box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
     cursor: pointer;
 }
@@ -146,7 +150,7 @@ input[type="number"] {
     border: none;
     border-radius: 12px;
     box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
-    padding: 0.7rem 1rem;
+    padding: 8px 12.8px;
     font-size: 1rem;
     outline: none;
     transition: box-shadow 0.2s;
@@ -264,7 +268,7 @@ input[type="number"] {
 }
 
 .input-group input {
-    padding: 0.5rem 0.8rem;
+    padding: 8px 12.8px;
     border: 0px solid #ccc;
     border-radius: 40px !important;
     font-size: 1rem;

@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div className="container">
-        <h1>Interes Compuesto</h1>
+        <h1 className='title'>Interes Compuesto</h1>
         <div className="content">
           <div className="content-left">
             <Inputs />
