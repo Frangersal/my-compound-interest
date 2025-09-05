@@ -1,0 +1,232 @@
+.input-group select option {
+    background: #e0e5ec;
+    color: #555;
+    box-shadow: 2px 2px 6px #babecc, -2px -2px 6px #fff;
+    border-radius: 12px;
+    margin: 4px 0;
+    padding: 0.5rem 1rem;
+}
+
+/* Custom select styles */
+.custom-select {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+.cs-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e0e5ec;
+    border: none;
+    border-radius: 40px;
+    padding: 0.7rem 1rem 0.7rem 1rem;
+    box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
+    cursor: pointer;
+}
+
+.cs-trigger:focus {
+    outline: none;
+}
+
+.cs-arrow {
+    width: 18px;
+    height: 18px;
+    opacity: 0.9;
+}
+
+.cs-options {
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin-top: 0.6rem;
+    background: #e0e5ec;
+    border-radius: 12px;
+    box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.06),
+        -8px -8px 18px rgba(255, 255, 255, 0.7);
+    padding: 0.4rem;
+    list-style: none;
+    z-index: 40;
+}
+
+.cs-option {
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    margin: 0.25rem 0;
+    cursor: pointer;
+    color: #333;
+}
+
+.cs-option:hover {
+    background: linear-gradient(180deg, #f7f9fb, #e6eef9);
+}
+
+.input-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 0.6rem;
+    vertical-align: middle;
+    filter: drop-shadow(1px 1px 2px #babecc);
+}
+
+.input-group select {
+    background: #e0e5ec url("../icons/select-arrow.svg") no-repeat right 1.2rem center;
+    border: none;
+    border-radius: 40px !important;
+    box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
+    padding: 0.7rem 2.8rem 0.7rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+    color: #555;
+    background-size: 20px 20px;
+    /* Ocultar flecha nativa */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.input-group select:focus {
+    box-shadow: 0 0 0 2px #8ca6db, inset 4px 4px 8px #babecc,
+        inset -4px -4px 8px #fff;
+}
+
+.input-group input {
+    background: #e0e5ec;
+    border: none;
+    border-radius: 12px;
+    box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+    /* Ocultar flechas en inputs tipo number */
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+}
+
+/* Ocultar flechas en Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Ocultar flechas en Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.container {
+    background: #e0e5ec;
+    border-radius: 20px;
+    box-shadow: 8px 8px 20px #babecc, -8px -8px 20px #fff;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.inputs-form {
+    background: #e0e5ec;
+    border-radius: 16px;
+    box-shadow: 6px 6px 16px #babecc, -6px -6px 16px #fff;
+    padding: 1.5rem;
+}
+
+.input-group input {
+    background: #e0e5ec;
+    border: none;
+    border-radius: 12px;
+    box-shadow: inset 4px 4px 8px #babecc, inset -4px -4px 8px #fff;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.input-group input:focus {
+    box-shadow: 0 0 0 2px #8ca6db, inset 4px 4px 8px #babecc,
+        inset -4px -4px 8px #fff;
+}
+
+.input-group label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #555;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.info-icon img {
+    filter: grayscale(1) brightness(0.5);
+    transition: filter 0.2s;
+}
+
+.info-icon:hover img {
+    filter: none;
+}
+
+.icon-img {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.icon-img {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.inputs-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    max-width: 400px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    position: relative;
+}
+
+.input-group label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.input-group input {
+    padding: 0.5rem 0.8rem;
+    border: 0px solid #ccc;
+    border-radius: 40px !important;
+    font-size: 1rem;
+}
+
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.info-icon img {
+    filter: grayscale(1) brightness(0.5);
+    transition: filter 0.2s;
+}
+
+.info-icon:hover img {
+    filter: none;
+}
