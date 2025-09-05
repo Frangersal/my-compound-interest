@@ -1,0 +1,40 @@
+.graph-card {
+    background: #e0e5ec;
+    border-radius: 16px;
+    box-shadow: 8px 8px 20px #babecc, -8px -8px 20px #fff;
+    padding: 1.5rem; /* igual que .inputs-form */
+    margin-top: 0; /* alinear con el inicio del formulario */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.graph-header {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.graph-body {
+    flex: 1 1 auto;
+    min-height: 180px; /* altura razonable si la columna es pequeña */
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.graph-body canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.graph-placeholder {
+    color: #6b7380;
+    background: linear-gradient(180deg, #f7f9fb, #e6eef9);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.03),
+        inset -2px -2px 6px rgba(255, 255, 255, 0.8);
+}

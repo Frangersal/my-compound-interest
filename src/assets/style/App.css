@@ -125,7 +125,7 @@ input[type="number"] {
     border-radius: 20px;
     box-shadow: 8px 8px 20px #babecc, -8px -8px 20px #fff;
     padding: 2rem;
-    max-width: 500px;
+    /* max-width: 00px; */
     margin: 2rem auto;
 }
 
@@ -191,8 +191,42 @@ input[type="number"] {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    margin-top: 2rem;
-    max-width: 400px;
+    margin-top: 0; /* quitar margen extra: el spacing lo debe dar el container */
+    max-width: none; /* permitir que el form ocupe todo el ancho de su columna */
+}
+
+/* Layout: poner inputs a la izquierda y gráfica a la derecha en pantallas grandes */
+.content {
+    display: flex;
+    gap: 64px; /* separación fija entre columnas */
+    align-items: stretch; /* estirar columnas para igualar altura */
+}
+.content-left,
+.content-right {
+    flex: 1 1 50%; /* cada columna toma ~50% del espacio disponible */
+    max-width: 50%;
+    box-sizing: border-box;
+    min-width: 0; /* evita overflow por contenido largo */
+    display: flex;
+    flex-direction: column; /* permitir que su hijo directo crezca */
+}
+
+/* Asegurar que los elementos internos ocupen todo el alto y ancho de su columna */
+.content-left > *,
+.content-right > * {
+    flex: 1 1 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .content {
+        flex-direction: column;
+    }
+    .content-right {
+        width: 100%;
+        flex: 1 1 auto;
+    }
 }
 
 .input-group {
