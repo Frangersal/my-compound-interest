@@ -188,3 +188,17 @@
     margin: 1rem 0 0.5rem 0;
     font-size: 0.98rem;
 }
+
+/* Botón de descarga PDF */
+.btn-download {
+    background: #e0e5ec;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px #babecc, -4px -4px 10px #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn-download:hover {
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.8);
+}

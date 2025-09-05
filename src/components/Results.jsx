@@ -4,11 +4,12 @@ import initialIcon from '../assets/icons/inicial.svg'
 import depositosIcon from '../assets/icons/depositos.svg'
 import interesIcon from '../assets/icons/interes.svg'
 import totalIcon from '../assets/icons/total.svg'
+import PdfExporter from './PdfExporter'
 
 // Componente simple que muestra un resumen de resultados basado en los valores
 // recibidos desde el formulario. Calcula el balance final aproximado usando
 // la misma lógica de capitalización por periodos que el gráfico (simplificada).
-export default function Results({ values = {} }) {
+export default function Results({ values = {}, graphRef = null, inputsRef = null }) {
     const { deposit = 0, rate = 0, years = 0, contrib = 0, contribInflation = 0, frequency = 'anualmente' } = values
 
     // Convertir tasa anual a decimal y periodos por año
@@ -90,9 +91,12 @@ export default function Results({ values = {} }) {
     const clsIntereses = 'value' + (fIntereses.isSci ? ' value--sci' : '') + (fIntereses.isLargeDigits ? ' value--small' : '')
     const clsFinalBalance = 'value' + (fFinalBalance.isSci ? ' value--sci' : '') + (fFinalBalance.isLargeDigits ? ' value--small' : '')
 
+    // Ref para acceder a la tarjeta de resultados y pasarla al exportador
+    const cardRef = React.useRef(null)
+
     return (
         <div className="content-bottom">
-            <div className="results-card">
+            <div className="results-card" ref={cardRef}>
                 <h3>Resultados</h3>
                 <div className="results-grid">
                     <div className="result-item result-inicial">
@@ -101,12 +105,12 @@ export default function Results({ values = {} }) {
                         <div className={clsDepositInicial}>${fDepositInicial.text}</div>
                     </div>
                     <div className="result-item result-depositos">
-                        <div className="label">Depósitos adicionales</div>
+                        <div className="label">Aportacion acumulada</div>
                         <div className="result-icon"><img src={depositosIcon} alt="Depósitos adicionales"/></div>
                         <div className={clsDepositosAdicionales}>${fDepositosAdicionales.text}</div>
                     </div>
                     <div className="result-item result-interes">
-                        <div className="label">Interés acumulado</div>
+                        <div className="label">Rendimiento acumulado</div>
                         <div className="result-icon"><img src={interesIcon} alt="Interés acumulado"/></div>
                         <div className={clsIntereses}>${fIntereses.text}</div>
                     </div>
@@ -125,10 +129,10 @@ export default function Results({ values = {} }) {
                             <thead>
                                 <tr>
                                     <th>Año</th>
-                                    <th>Saldo inicial</th>
+                                    <th>Depósito inicial</th>
                                     <th>Aportación</th>
                                     <th>Rendimiento</th>
-                                    <th>Saldo final</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -144,6 +148,8 @@ export default function Results({ values = {} }) {
                             </tbody>
                         </table>
                     </div>
+
+                    <PdfExporter targetRef={cardRef} graphRef={graphRef} inputsRef={inputsRef} formValues={values} className="btn-download" />
                 </div>
             </div>
         </div>

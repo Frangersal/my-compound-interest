@@ -336,6 +336,17 @@ input[type="number"] {
     align-items: center;
     justify-content: space-between;
 }
+
+.disclaimer {
+    margin-top: 1.25rem;
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 10px;
+    color: #444;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border: 1px solid rgba(0,0,0,0.04);
+}
 .result-item .label {
     font-size: 0.9rem;
     color: #666;

@@ -66,8 +66,9 @@ function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, contr
     return { labels, depositSeries, contribSeries, intereses }
 }
 
-export default function Graph({ values = {} }) {
-    const canvasRef = useRef(null)
+export default function Graph({ values = {}, canvasRef: canvasRefProp }) {
+    // Allow parent to pass a ref so other components can capture the canvas
+    const canvasRef = canvasRefProp || useRef(null)
     const chartRef = useRef(null)
 
     // Efecto que crea el chart y lo actualiza cuando cambian los valores.

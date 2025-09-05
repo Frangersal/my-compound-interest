@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, forwardRef } from 'react'
 import '../assets/style/App.css'
 import infoIcon from '../assets/icons/info.svg';
 import moneyIcon from '../assets/icons/money.svg';
@@ -7,7 +7,9 @@ import calendarIcon from '../assets/icons/calendar.svg';
 import clockIcon from '../assets/icons/clock.svg';
 import selectArrow from '../assets/icons/select-arrow.svg';
 
-export default function Inputs({ onValuesChange, initialValues = {} }) {
+// consolidated React import above
+
+function InputsInner({ onValuesChange, initialValues = {} }, ref) {
     // Estados "raw": guardan los valores numéricos sin formato
     // (solo dígitos y punto). Usamos estos para cálculos y para
     // evitar problemas del caret cuando formateamos la visualización.
@@ -180,7 +182,7 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
     const contribInflationDisplay = contribInflationFocused ? contribInflationRaw : formatPercent(contribInflationRaw);
 
     return (
-        <form className="inputs-form">
+        <form className="inputs-form" ref={ref}>
             <div className="input-group">
                 <label>
                     <img src={moneyIcon} alt="money" className="input-icon" />
@@ -198,11 +200,10 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
                     onChange={(e) => {
                         const v = unformatNumber(e.target.value);
                         setDepositRaw(v);
-                        if (typeof onValuesChange === 'function') onValuesChange({ deposit: v ? Number(v) : 0 })
-                    }}
-                />
-            </div>
-
+                            if (typeof onValuesChange === 'function') onValuesChange({ deposit: v ? Number(v) : 0 });
+                        }}
+                    />
+                    </div>
             <div className="input-group">
                 <label>
                     <img src={percentIcon} alt="percent" className="input-icon" />
@@ -302,6 +303,10 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
                     }}
                 />
             </div>
+
         </form>
     )
 }
+
+const Inputs = forwardRef(InputsInner)
+export default Inputs
