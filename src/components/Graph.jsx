@@ -11,37 +11,48 @@ export default function Graph() {
     useEffect(() => {
         const ctx = canvasRef.current.getContext('2d')
 
-        // Datos de ejemplo
-        const labels = ['0', '1', '2', '3', '4', '5']
+        // Datos de ejemplo para Stacked Bar Chart
+        const labels = ['Año 0', 'Año 1', 'Año 2', 'Año 3', 'Año 4', 'Año 5']
+
+        // Dos datasets: aporte principal y crecimiento por intereses, para mostrar apilamiento
         const data = {
             labels,
             datasets: [
                 {
-                    label: 'Balance proyectado',
-                    data: [1000, 1200, 1500, 1900, 2400, 3000],
-                    fill: true,
-                    backgroundColor: 'rgba(140,166,219,0.2)',
-                    borderColor: 'rgba(140,166,219,1)',
-                    tension: 0.3,
+                    label: 'Capital (aporte)',
+                    data: [1000, 1100, 1200, 1300, 1400, 1500],
+                    backgroundColor: 'rgba(6, 182, 0, 0.85)'
                 },
-            ],
+                {
+                    label: 'Interés acumulado',
+                    data: [0, 100, 300, 600, 1000, 1500],
+                    backgroundColor: 'rgba(5, 221, 70, 0.74)'
+                }
+            ]
         }
 
         const config = {
-            type: 'line',
+            type: 'bar',
             data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    x: { display: true, title: { display: false } },
-                    y: { display: true, title: { display: false } },
-                },
                 plugins: {
                     legend: { display: true, position: 'top' },
-                    tooltip: { enabled: true },
+                    tooltip: { enabled: true }
                 },
-            },
+                scales: {
+                    x: {
+                        stacked: true,
+                        display: true,
+                    },
+                    y: {
+                        stacked: true,
+                        display: true,
+                        beginAtZero: true
+                    }
+                }
+            }
         }
 
         // Crear instancia del chart
