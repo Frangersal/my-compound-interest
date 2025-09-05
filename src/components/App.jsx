@@ -7,11 +7,11 @@ import Footer from './Footer'
 
 function App() {
   const [values, setValues] = useState({
-    deposit: 1000,
+    deposit: 100000,
     rate: 9,
-    years: 5,
-    contrib: 100,
-  contribInflation: 0,
+    years: 20,
+    contrib: 10000,
+    contribInflation: 5,
     frequency: 'anualmente'
   })
 
@@ -39,9 +39,9 @@ function App() {
             <Results values={values} />
           </div>
         </div>
-    </div>
-    <Footer />
-  </>
+      </div>
+      <Footer />
+    </>
   )
 }
 

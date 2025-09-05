@@ -14,12 +14,13 @@
     background: #e0e5ec;
     border-radius: 12px;
     box-shadow: 6px 6px 14px #babecc, -6px -6px 14px #fff;
-    padding: 0.9rem;
+    padding: 0.9rem 0.1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 140px; /* más chaparro en escritorio */
+    height: 140px;
+    /* más chaparro en escritorio */
     box-sizing: border-box;
 }
 
@@ -40,7 +41,7 @@
     box-shadow: inset 2px 2px 6px rgba(255,255,255,0.6), inset -2px -2px 6px rgba(0,0,0,0.03); */
 }
 
-.result-icon img{
+.result-icon img {
     width: 42px;
     height: 42px;
 }
@@ -51,43 +52,108 @@
     color: #222;
 }
 
+/* Valor en notación científica: reducir tamaño para que entre bien */
+.result-item .value.value--sci {
+    font-size: 1.05rem;
+}
+
+/* Reducir tamaño cuando el número tiene muchos dígitos ( > 12 dígitos ) */
+.result-item .value.value--small {
+    font-size: 1rem;
+}
+
 /* Colores por tipo */
 .result-inicial {
-    background: linear-gradient(180deg, #06b600, #039e00); /* verdes */
+    background: linear-gradient(180deg, #06b600, #039e00);
+    /* verdes */
     color: #fff;
 }
-.result-inicial .label, .result-inicial .value { color: #fff }
+
+.result-inicial .label,
+.result-inicial .value {
+    color: #fff;
+}
+
 /* .result-inicial .result-icon { background: rgba(255,255,255,0.12); } */
-.result-inicial .result-icon img { filter: brightness(0) invert(1); }
+.result-inicial .result-icon img {
+    filter: brightness(0) invert(1);
+}
 
 .result-depositos {
-    background: linear-gradient(180deg, #ffd54f, #ffca28); /* amarillos */
+    background: linear-gradient(180deg, #ffd54f, #ffca28);
+    /* amarillos */
     color: #111;
 }
-.result-depositos .label, .result-depositos .value { color: #111 }
+
+.result-depositos .label,
+.result-depositos .value {
+    color: #111;
+}
+
 /* .result-depositos .result-icon { background: rgba(0,0,0,0.04); } */
-.result-depositos .result-icon img { filter: none; }
+.result-depositos .result-icon img {
+    filter: none;
+}
 
 .result-interes {
-    background: linear-gradient(180deg, #ff9800, #fb8c00); /* naranja */
+    background: linear-gradient(180deg, #ff9800, #fb8c00);
+    /* naranja */
     color: #111;
 }
-.result-interes .label, .result-interes .value { color: #111 }
+
+.result-interes .label,
+.result-interes .value {
+    color: #111;
+}
+
 /* .result-interes .result-icon { background: rgba(0,0,0,0.04); } */
-.result-interes .result-icon img { filter: none; }
+.result-interes .result-icon img {
+    filter: none;
+}
 
 .result-total {
-    background: linear-gradient(180deg, #6e6e6e, #333333); /* azul para total */
+    background: linear-gradient(180deg, #6e6e6e, #333333);
+    /* azul para total */
     color: #fff;
 }
-.result-total .label, .result-total .value { color: #fff }
+
+.result-total .label,
+.result-total .value {
+    color: #fff;
+}
+
 /* .result-total .result-icon { background: rgba(255,255,255,0.12); } */
-.result-total .result-icon img { filter: brightness(0) invert(1); }
+.result-total .result-icon img {
+    filter: brightness(0) invert(1);
+}
 
 @media (max-width: 900px) {
     .results-card .results-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .result-item { aspect-ratio: auto; height: 120px }
+
+    .result-item {
+        aspect-ratio: auto;
+        height: 120px;
+    }
 }
 
+/* Cuando la pantalla es menor a 992px, apilar los resultados hacia abajo
+   (cada .result-item ocupa toda la fila). Esto 'colapsa' la rejilla y hace
+   que los items se acomoden verticalmente */
+@media (max-width: 992px) {
+    .results-card .results-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .result-item {
+        width: 100%;
+        height: auto;
+        padding: 0.9rem 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+}

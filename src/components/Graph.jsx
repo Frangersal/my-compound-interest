@@ -15,7 +15,7 @@ Chart.register(...registerables)
 // precisión financiera exacta (por ejemplo, tratamiento de aportes al principio
 // de periodo o intereses prorrateados con mayor exactitud), lo podemos ajustar.
 // IMPORTANTE: los colores de los datasets se mantienen tal como estaban (no los cambiamos).
-function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, frequency = 'anualmente' }) {
+function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, contribInflation = 0, frequency = 'anualmente' }) {
     const labels = []
     const depositSeries = []
     const contribSeries = []
@@ -29,11 +29,19 @@ function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, frequ
     // Para cada año calculamos el balance al final del año mediante capitalización
     // discreta por los m periodos definidos (p. ej. 12 para mensual). Se aplica el
     // interés periodo a periodo y luego se añade la contribución del periodo.
+    // Ahora soportamos un incremento anual en las aportaciones: `contribInflation`
+    // (porcentaje). Aplicamos dicho porcentaje al valor de `contrib` al finalizar
+    // cada año, de forma que el año siguiente las aportaciones periódicas sean mayores.
     let balance = Number(deposit)
     labels.push('Año 0')
     depositSeries.push(Number(deposit))
     contribSeries.push(0)
     intereses.push(0)
+
+    // Variables para contribuciones crecientes
+    let contribYear = Number(contrib)
+    const inc = Number(contribInflation) / 100
+    let totalContrib = 0
 
     for (let y = 1; y <= Number(years); y++) {
         // Capitalizamos a través de m periodos dentro del año
@@ -41,16 +49,18 @@ function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, frequ
             const periodRate = r / m
             // Acumulamos el interés sobre el saldo actual
             balance = balance * (1 + periodRate)
-            // Añadimos la contribución al final de cada periodo
-            balance = balance + Number(contrib)
+            // Añadimos la contribución del periodo (usando la contribución de este año)
+            balance = balance + contribYear
+            totalContrib += contribYear
         }
-        // A modo de aproximación: separamos el depósito inicial (constante) de las
-        // aportaciones adicionales acumuladas hasta ese año.
-        const contribAcum = Number(contrib) * (m * y)
+
         labels.push(`Año ${y}`)
         depositSeries.push(Number(deposit))
-        contribSeries.push(contribAcum)
-        intereses.push(Math.max(0, Math.round(balance - (Number(deposit) + contribAcum))))
+        contribSeries.push(totalContrib)
+        intereses.push(Math.max(0, Math.round(balance - (Number(deposit) + totalContrib))))
+
+        // Incrementar la aportación para el siguiente año
+        contribYear = contribYear * (1 + inc)
     }
 
     return { labels, depositSeries, contribSeries, intereses }
