@@ -1,4 +1,4 @@
-import './Graph.css'
+import '../assets/style/Graph.css'
 import { useRef, useEffect } from 'react'
 import { Chart, registerables } from 'chart.js'
 
@@ -76,18 +76,18 @@ export default function Graph({ values = {} }) {
                     // Depósito inicial (parte fija que aporta el capital de inicio)
                     label: 'Capital inicial',
                     data: depositSeries,
-                    backgroundColor: 'rgba(0, 194, 26, 0.9)'
+                    backgroundColor: '#039e00'
                 },
                 {
                     // Aportaciones adicionales acumuladas hasta cada año
                     label: 'Aportaciones adicionales',
                     data: contribSeries,
-                    backgroundColor: 'rgba(217, 221, 0, 0.9)'
+                    backgroundColor: '#ffca28'
                 },
                 {
                     label: 'Interés acumulado',
                     data: intereses,
-                    backgroundColor: 'rgba(221, 153, 5, 0.8)'
+                    backgroundColor: '#fb8c00'
                 }
             ]
         }

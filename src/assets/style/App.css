@@ -130,6 +130,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Ocultar flechas en Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .container {
@@ -291,3 +292,43 @@ input[type="number"] {
 .info-icon:hover img {
     filter: none;
 }
+
+/* Estilos para la sección inferior de resultados */
+.content-bottom-wrapper {
+    margin-top: 1.5rem;
+    display: block; /* permitir que la sección use todo el ancho del contenedor */
+    width: 100%;
+}
+.content-bottom-inner {
+    width: 100%;
+    max-width: none; /* permitir que ocupe todo el ancho disponible */
+}
+.content-bottom {
+    display: flex;
+    gap: 1rem;
+}
+.results-card {
+    background: #e0e5ec;
+    border-radius: 16px;
+    box-shadow: 6px 6px 16px #babecc, -6px -6px 16px #fff;
+    padding: 1rem 1.25rem;
+    width: 100%; /* ocupar todo el ancho del contenedor padre */
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+.results-grid {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+.result-item .label {
+    font-size: 0.9rem;
+    color: #666;
+}
+.result-item .value {
+    font-weight: 700;
+    font-size: 2rem;
+    color: #222;
+}
+

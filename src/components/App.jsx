@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Inputs from './Inputs'
 import Graph from './Graph'
+import Results from './Results'
 
 function App() {
   const [values, setValues] = useState({
@@ -30,6 +31,12 @@ function App() {
           </div>
         </div>
 
+        {/* Nueva sección inferior para mostrar resultados resumidos */}
+        <div className="content-bottom-wrapper">
+          <div className="content-bottom-inner">
+            <Results values={values} />
+          </div>
+        </div>
       </div>
     </>
   )
