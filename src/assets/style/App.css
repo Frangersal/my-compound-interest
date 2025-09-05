@@ -1,7 +1,10 @@
 .title{
     margin-bottom: 2rem!important;
 }
-
+.lead{
+    
+    margin-bottom: 1rem;
+}
 .input-group select option {
     background: #e0e5ec;
     color: #555;
