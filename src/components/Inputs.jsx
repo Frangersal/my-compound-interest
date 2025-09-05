@@ -11,18 +11,24 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
     // Estados "raw": guardan los valores numéricos sin formato
     // (solo dígitos y punto). Usamos estos para cálculos y para
     // evitar problemas del caret cuando formateamos la visualización.
+    // contribRaw: aportación periódica en formato "raw" (solo dígitos/punto),
+    // se convierte a Number(contribRaw) para cálculos.
     const [depositRaw, setDepositRaw] = useState(initialValues.deposit ? String(initialValues.deposit) : '');
     const [rateRaw, setRateRaw] = useState(initialValues.rate ? String(initialValues.rate) : '');
     const [yearsRaw, setYearsRaw] = useState(initialValues.years ? String(initialValues.years) : '');
     const [contribRaw, setContribRaw] = useState(initialValues.contrib ? String(initialValues.contrib) : '');
+    const [contribInflationRaw, setContribInflationRaw] = useState(initialValues.contribInflation ? String(initialValues.contribInflation) : '');
 
     // Flags de foco: cuando un campo está enfocado mostramos el valor
     // sin formato (raw) para permitir edición natural; al blur mostramos
     // la versión formateada (con $ / % / "años").
+    // contribFocused: true mientras el usuario edita el campo de aportaciones
+    // para mostrar el valor raw sin formato y preservar la posición del caret.
     const [depositFocused, setDepositFocused] = useState(false);
     const [rateFocused, setRateFocused] = useState(false);
     const [yearsFocused, setYearsFocused] = useState(false);
     const [contribFocused, setContribFocused] = useState(false);
+    const [contribInflationFocused, setContribInflationFocused] = useState(false);
 
     // Helpers de formato / parseo
     // numberFormatter: usa 'en-US' para mostrar separador de miles con comas
@@ -165,10 +171,13 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
     // rateDisplay: mientras enfocado muestra rateRaw; al blur añade sufijo '%' para visualización.
     // yearsDisplay: mientras enfocado muestra yearsRaw; al blur muestra 'año' o 'años' según el número.
     // contribDisplay: igual que depositDisplay (moneda con '$' y separador de miles).
+    // contribInflationDisplay: muestra el porcentaje formateado con '%'
+    // cuando no está en foco; en foco se muestra el raw para editar.
     const depositDisplay = depositFocused ? depositRaw : formatCurrency(depositRaw);
     const rateDisplay = rateFocused ? rateRaw : formatPercent(rateRaw);
     const yearsDisplay = yearsFocused ? yearsRaw : formatYears(yearsRaw);
     const contribDisplay = contribFocused ? contribRaw : formatCurrency(contribRaw);
+    const contribInflationDisplay = contribInflationFocused ? contribInflationRaw : formatPercent(contribInflationRaw);
 
     return (
         <form className="inputs-form">
@@ -268,6 +277,28 @@ export default function Inputs({ onValuesChange, initialValues = {} }) {
                         const v = unformatNumber(e.target.value);
                         setContribRaw(v);
                         if (typeof onValuesChange === 'function') onValuesChange({ contrib: v ? Number(v) : 0 })
+                    }}
+                />
+            </div>
+            
+            <div className="input-group">
+                <label>
+                    <img src={percentIcon} alt="percent" className="input-icon" />
+                    Incremento % de aportación anual 
+                    <span className="info-icon" title="Porcentaje anual de incremento de las aportaciones para compensar inflación.">
+                        <img src={infoIcon} alt="info" className="icon-img" />
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Ej: 9"
+                    value={contribInflationDisplay}
+                    onFocus={() => setContribInflationFocused(true)}
+                    onBlur={() => setContribInflationFocused(false)}
+                    onChange={(e) => {
+                        const v = unformatNumber(e.target.value);
+                        setContribInflationRaw(v);
+                        if (typeof onValuesChange === 'function') onValuesChange({ contribInflation: v ? Number(v) : 0 })
                     }}
                 />
             </div>

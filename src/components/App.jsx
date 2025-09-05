@@ -11,6 +11,7 @@ function App() {
     rate: 9,
     years: 5,
     contrib: 100,
+  contribInflation: 0,
     frequency: 'anualmente'
   })
 

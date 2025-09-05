@@ -224,9 +224,23 @@ input[type="number"] {
     flex-direction: column; /* permitir que su hijo directo crezca */
 }
 
+    /* En pantallas de escritorio establecer proporción 40/60 entre columnas */
+    @media (min-width: 992px) {
+        .content-left {
+            flex: 1 1 40%;
+            max-width: 40%;
+        }
+        .content-right {
+            flex: 1 1 60%;
+            max-width: 60%;
+        }
+    }
+
 /* Asegurar que los elementos internos ocupen todo el alto y ancho de su columna */
 .content-left > *,
 .content-right > * {
+    /* hijos directos ocupan el espacio disponible y mantienen comportamiento
+       previo: flex-grow/flex-shrink con flex-basis automático */
     flex: 1 1 auto;
     width: 100%;
     box-sizing: border-box;
@@ -235,7 +249,7 @@ input[type="number"] {
 /* Limitar la altura total de cada columna para evitar comportamientos inesperados al redimensionar */
 .content-left,
 .content-right {
-    max-height: 495px; /* no más alto que el 80% de la altura de la ventana */
+    max-height: 610px; 
 }
 
 /* Permitir scroll interno si el contenido excede la altura máxima */
