@@ -73,16 +73,26 @@ export default function Inputs() {
         // "selected" guarda la opción actual mostrada en el trigger.
         const [open, setOpen] = useState(false);
         const [selected, setSelected] = useState(options[0]);
-        const ref = useRef(null);
+    const ref = useRef(null);
+    const overlayRef = useRef(null);
 
-        // useEffect: escucha clicks fuera del componente para cerrar el desplegable.
-        // Esto evita que la lista quede abierta si el usuario clickea en otra parte.
+        // useEffect: escucha clicks fuera del trigger/overlay para cerrar el desplegable.
         useEffect(() => {
             function onDocClick(e) {
-                if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+                if (ref.current && !ref.current.contains(e.target) && overlayRef.current && !overlayRef.current.contains(e.target)) setOpen(false);
+            }
+            function onScrollResize() {
+                // cerrar al hacer scroll o resize para evitar overlays mal posicionados
+                setOpen(false);
             }
             document.addEventListener('click', onDocClick);
-            return () => document.removeEventListener('click', onDocClick);
+            window.addEventListener('scroll', onScrollResize, true);
+            window.addEventListener('resize', onScrollResize);
+            return () => {
+                document.removeEventListener('click', onDocClick);
+                window.removeEventListener('scroll', onScrollResize, true);
+                window.removeEventListener('resize', onScrollResize);
+            };
         }, []);
 
         // Precompute elements to avoid inline logic inside JSX
@@ -90,11 +100,48 @@ export default function Inputs() {
         const optionsElements = options.map(opt => (
             <li key={opt.value} className="cs-option" onClick={() => { setSelected(opt); setOpen(false); }}>{opt.label}</li>
         ));
-        const optionsDropdown = open ? (
-            <ul className="cs-options">
-                {optionsElements}
-            </ul>
-        ) : null;
+        // When open, render the options into a body-level overlay to avoid clipping by parent overflow
+        useEffect(() => {
+            if (!open) {
+                // remove overlay if exists
+                if (overlayRef.current) {
+                    document.body.removeChild(overlayRef.current);
+                    overlayRef.current = null;
+                }
+                return;
+            }
+
+            // create overlay container
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.zIndex = 9999;
+            overlayRef.current = overlay;
+            document.body.appendChild(overlay);
+
+            const rect = ref.current.getBoundingClientRect();
+            overlay.style.left = rect.left + 'px';
+            overlay.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+            overlay.style.width = rect.width + 'px';
+
+            // render options as plain HTML inside overlay (simple, no React portal)
+            overlay.innerHTML = `<ul class="cs-options" style="margin:0;">${options.map(opt => `<li class=\"cs-option\">${opt.label}</li>`).join('')}</ul>`;
+
+            // attach click handlers to li elements
+            const lis = overlay.querySelectorAll('.cs-option');
+            lis.forEach((li, idx) => {
+                li.addEventListener('click', () => {
+                    setSelected(options[idx]);
+                    setOpen(false);
+                });
+            });
+
+            return () => {
+                if (overlayRef.current) {
+                    document.body.removeChild(overlayRef.current);
+                    overlayRef.current = null;
+                }
+            };
+        }, [open]);
 
         return (
             <div className="custom-select" ref={ref}>
@@ -103,7 +150,6 @@ export default function Inputs() {
                     <span>{selected.label}</span>
                     <img src={selectArrow} alt="arrow" className="cs-arrow" />
                 </button>
-                {optionsDropdown}
             </div>
         );
     }
