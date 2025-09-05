@@ -15,34 +15,46 @@ export default function Results({ values = {} }) {
     const r = Number(rate) / 100
     const m = frequency === 'mensualmente' ? 12 : frequency === 'quincenalmente' ? 24 : frequency === 'semanalmente' ? 52 : frequency === 'diariamente' ? 365 : 1
 
-    // Calcular balance final y aportaciones acumuladas considerando
-    // que las aportaciones aumentan un % anual definido por contribInflation.
+    // Calcular balance y generar un desglose por año.
+    // Las aportaciones periódicas aumentan `contribInflation` % cada año.
     const inc = Number(contribInflation) / 100
     let balance = Number(deposit)
     let contribYear = Number(contrib)
+
+    // yearsData almacenará por cada año: año, saldo inicial, aportación anual,
+    // rendimiento (interés) del año y saldo final.
+    const yearsData = []
     let totalContrib = 0
+    let totalInterest = 0
 
     for (let y = 1; y <= Number(years); y++) {
-        // Por cada periodo dentro del año: aplicar el interés del periodo
-        // sobre el saldo actual y luego sumar la aportación periódica al final
-        // del periodo. Además acumulamos esa aportación en totalContrib.
+        const startBalance = balance
+        let yearContrib = 0
+        let yearInterest = 0
+
+        // Por cada periodo dentro del año: aplicar interés y luego sumar aportación
         for (let p = 0; p < m; p++) {
+            const before = balance
             balance = balance * (1 + r / m)
+            const interest = balance - before
+            yearInterest += interest
             balance = balance + contribYear
+            yearContrib += contribYear
             totalContrib += contribYear
         }
 
-        // Al finalizar el año, incrementamos la aportación periódica para
-        // el siguiente año usando el porcentaje `contribInflation`.
+        const endBalance = balance
+        yearsData.push({ year: y, startBalance, contrib: yearContrib, interest: yearInterest, endBalance })
+        totalInterest += yearInterest
+
+        // Incrementar la aportación periódica para el siguiente año
         contribYear = contribYear * (1 + inc)
     }
 
     const depositInicial = Number(deposit)
     const depositosAdicionales = totalContrib
     const totalAportado = depositInicial + depositosAdicionales
-    // Intereses acumulados (mantener >= 0)
-    const interesesRaw = balance - totalAportado
-    const intereses = Math.max(0, interesesRaw)
+    const intereses = Math.max(0, totalInterest)
     const finalBalance = balance
 
     const moneyFormatter = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -102,6 +114,35 @@ export default function Results({ values = {} }) {
                         <div className="label">Total</div>
                         <div className="result-icon"><img src={totalIcon} alt="Total"/></div>
                         <div className={clsFinalBalance}>${fFinalBalance.text}</div>
+                    </div>
+                </div>
+
+                {/* Tabla de desglose anual debajo de los result-items */}
+                <div className="results-table-wrapper">
+                    <h4>Desglose anual</h4>
+                    <div className="table-responsive">
+                        <table className="table table-sm table-striped table-hover results-table">
+                            <thead>
+                                <tr>
+                                    <th>Año</th>
+                                    <th>Saldo inicial</th>
+                                    <th>Aportación</th>
+                                    <th>Rendimiento</th>
+                                    <th>Saldo final</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {yearsData.map((row) => (
+                                    <tr key={row.year}>
+                                        <td>{row.year}</td>
+                                        <td>${moneyFormatter.format(row.startBalance)}</td>
+                                        <td>${moneyFormatter.format(row.contrib)}</td>
+                                        <td>${moneyFormatter.format(row.interest)}</td>
+                                        <td>${moneyFormatter.format(row.endBalance)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

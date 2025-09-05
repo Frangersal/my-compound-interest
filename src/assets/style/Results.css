@@ -157,3 +157,34 @@
         justify-content: flex-start;
     }
 }
+
+/* Estilos para la tabla de desglose anual */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: transparent;
+}
+.results-table thead th {
+    font-weight: 700; /* encabezados en negrita */
+    text-align: center; /* centrar títulos */
+    padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid rgba(0,0,0,0.08);
+}
+.results-table tbody td {
+    text-align: center; /* centrar contenido */
+    padding: 0.5rem 0.6rem;
+    border-left: 1px solid rgba(0,0,0,0.06); /* bordes verticales entre columnas */
+}
+.results-table tbody tr td:first-child {
+    border-left: none;
+}
+.results-table tbody tr + tr td {
+    border-top: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Hacer la tabla responsiva en pantallas pequeñas (ya usamos table-responsive en JSX) */
+.results-table-wrapper h4 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 0.98rem;
+}
