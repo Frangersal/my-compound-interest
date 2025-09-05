@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Inputs from './Inputs'
 import Graph from './Graph'
 import Results from './Results'
+import Footer from './Footer'
 
 function App() {
   const [values, setValues] = useState({
@@ -37,8 +38,9 @@ function App() {
             <Results values={values} />
           </div>
         </div>
-      </div>
-    </>
+    </div>
+    <Footer />
+  </>
   )
 }
 

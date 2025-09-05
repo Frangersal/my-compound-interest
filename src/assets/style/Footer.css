@@ -1,0 +1,105 @@
+.app-footer {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-inner {
+    background: linear-gradient(180deg,
+            rgba(224, 229, 236, 0.9),
+            rgba(224, 229, 236, 0.98));
+    padding: 0.9rem 2rem;
+    /* suficiente padding lateral para separarlo de los bordes */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: #444;
+    font-size: 0.95rem;
+    width: 100%;
+    max-width: none;
+    /* ocupar todo el ancho */
+    border-radius: 0;
+    /* borde recto para abarcar todo el largo */
+    box-shadow: inset 2px 2px 8px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.6px;
+}
+
+.footer-meta {
+    font-size: 0.85rem;
+    color: #6b7380;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #e6edf5, #dfe6ef);
+    border: none;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.06),
+        -4px -4px 12px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.icon-btn:active {
+    transform: translateY(1px);
+}
+
+.icon-btn:hover {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.08),
+        -2px -2px 8px rgba(255, 255, 255, 0.75);
+    transform: translateY(-2px);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.98;
+}
+
+@media (max-width: 700px) {
+    .footer-inner {
+        padding: 0.6rem 1rem;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .footer-right {
+        order: 2;
+    }
+
+    .footer-left {
+        order: 1;
+        text-align: center;
+    }
+}

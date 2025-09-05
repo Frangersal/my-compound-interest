@@ -1,0 +1,18 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+	<title>Logo FGSM Cuadrado</title>
+	<defs>
+		<image  width="1200" height="1200" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAASwAQMAAADR7yGMAAAAAXNSR0IB2cksfwAAAANQTFRF4+XYp98ObAAAAMZJREFUeJztwTEBAAAAwqD1T20JT6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4G/D7gABQ9LHqwAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+		.s0 { fill: #064428 } 
+		.s1 { fill: #e3e5d8 } 
+	</style>
+	<g id="Blanco-Verde">
+		<use id="Capa 1" href="#img1" x="0" y="0"/>
+		<path id="Forma 1 copy 2" class="s0" d="m100 100h1000v1000h-1000z"/>
+		<g id="FGSM Negro">
+			<path id="sm" class="s1" aria-label="sm"  d="m536.4 999l34.3-34.3v-139.7l-34.3-34.8h-208.3v-69.6h173.5v34.8h69.1v-69.2l-34.3-35.3h-243.6l-34.3 35.3v149.2l34.3 24.9h208.8v69.1h-173.5v-34.3h-69.6v69.6l34.3 34.3zm153.6 0v-234.7l93 133.8h58.2l91-133.8v234.7h69.6v-348.1h-67.1l-123.4 168.6-121.3-168.6h-69.6v348.1z"/>
+			<path id="FG" class="s1" aria-label="FG"  d="m270.1 549v-138.7h208.3v-69.6h-208.3v-70.1h225.7v-69.7h-295.3v348.1zm538.5 0l34.3-34.3v-165.1h-156.7v69.6h87.6v60.2h-173.6v-208.8h173.6v34.8h69.1v-69.2l-34.3-35.3h-243.7l-34.3 35.3v278.5l34.3 34.3z"/>
+		</g>
+	</g>
+</svg>
