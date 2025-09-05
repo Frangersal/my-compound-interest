@@ -7,14 +7,14 @@ import calendarIcon from '../assets/icons/calendar.svg';
 import clockIcon from '../assets/icons/clock.svg';
 import selectArrow from '../assets/icons/select-arrow.svg';
 
-export default function Inputs() {
+export default function Inputs({ onValuesChange, initialValues = {} }) {
     // Estados "raw": guardan los valores numéricos sin formato
     // (solo dígitos y punto). Usamos estos para cálculos y para
     // evitar problemas del caret cuando formateamos la visualización.
-    const [depositRaw, setDepositRaw] = useState('');
-    const [rateRaw, setRateRaw] = useState('');
-    const [yearsRaw, setYearsRaw] = useState('');
-    const [contribRaw, setContribRaw] = useState('');
+    const [depositRaw, setDepositRaw] = useState(initialValues.deposit ? String(initialValues.deposit) : '');
+    const [rateRaw, setRateRaw] = useState(initialValues.rate ? String(initialValues.rate) : '');
+    const [yearsRaw, setYearsRaw] = useState(initialValues.years ? String(initialValues.years) : '');
+    const [contribRaw, setContribRaw] = useState(initialValues.contrib ? String(initialValues.contrib) : '');
 
     // Flags de foco: cuando un campo está enfocado mostramos el valor
     // sin formato (raw) para permitir edición natural; al blur mostramos
@@ -71,8 +71,11 @@ export default function Inputs() {
 
         // Estado local del select: "open" controla si la lista está desplegada.
         // "selected" guarda la opción actual mostrada en el trigger.
-        const [open, setOpen] = useState(false);
-        const [selected, setSelected] = useState(options[0]);
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(() => {
+        const found = options.find(o => o.value === initialValues.frequency);
+        return found || options[0];
+    });
     const ref = useRef(null);
     const overlayRef = useRef(null);
 
@@ -98,7 +101,7 @@ export default function Inputs() {
         // Precompute elements to avoid inline logic inside JSX
         const triggerClass = `cs-trigger ${open ? 'open' : ''}`;
         const optionsElements = options.map(opt => (
-            <li key={opt.value} className="cs-option" onClick={() => { setSelected(opt); setOpen(false); }}>{opt.label}</li>
+            <li key={opt.value} className="cs-option" onClick={() => { setSelected(opt); setOpen(false); if (typeof onValuesChange === 'function') onValuesChange({ frequency: opt.value }); }}>{opt.label}</li>
         ));
         // When open, render the options into a body-level overlay to avoid clipping by parent overflow
         useEffect(() => {
@@ -131,6 +134,8 @@ export default function Inputs() {
             lis.forEach((li, idx) => {
                 li.addEventListener('click', () => {
                     setSelected(options[idx]);
+                    // notify parent
+                    if (typeof onValuesChange === 'function') onValuesChange({ frequency: options[idx].value });
                     setOpen(false);
                 });
             });
@@ -181,7 +186,11 @@ export default function Inputs() {
                     value={depositDisplay}
                     onFocus={() => setDepositFocused(true)}
                     onBlur={() => setDepositFocused(false)}
-                    onChange={(e) => setDepositRaw(unformatNumber(e.target.value))}
+                    onChange={(e) => {
+                        const v = unformatNumber(e.target.value);
+                        setDepositRaw(v);
+                        if (typeof onValuesChange === 'function') onValuesChange({ deposit: v ? Number(v) : 0 })
+                    }}
                 />
             </div>
 
@@ -199,7 +208,11 @@ export default function Inputs() {
                     value={rateDisplay}
                     onFocus={() => setRateFocused(true)}
                     onBlur={() => setRateFocused(false)}
-                    onChange={(e) => setRateRaw(unformatNumber(e.target.value))}
+                    onChange={(e) => {
+                        const v = unformatNumber(e.target.value);
+                        setRateRaw(v);
+                        if (typeof onValuesChange === 'function') onValuesChange({ rate: v ? Number(v) : 0 })
+                    }}
                 />
             </div>
 
@@ -217,7 +230,11 @@ export default function Inputs() {
                     value={yearsDisplay}
                     onFocus={() => setYearsFocused(true)}
                     onBlur={() => setYearsFocused(false)}
-                    onChange={(e) => setYearsRaw(unformatNumber(e.target.value))}
+                    onChange={(e) => {
+                        const v = unformatNumber(e.target.value);
+                        setYearsRaw(v);
+                        if (typeof onValuesChange === 'function') onValuesChange({ years: v ? Number(v) : 0 })
+                    }}
                 />
             </div>
 
@@ -247,7 +264,11 @@ export default function Inputs() {
                     value={contribDisplay}
                     onFocus={() => setContribFocused(true)}
                     onBlur={() => setContribFocused(false)}
-                    onChange={(e) => setContribRaw(unformatNumber(e.target.value))}
+                    onChange={(e) => {
+                        const v = unformatNumber(e.target.value);
+                        setContribRaw(v);
+                        if (typeof onValuesChange === 'function') onValuesChange({ contrib: v ? Number(v) : 0 })
+                    }}
                 />
             </div>
         </form>
