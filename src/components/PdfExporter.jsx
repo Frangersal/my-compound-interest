@@ -22,13 +22,16 @@ export default function PdfExporter({ targetRef, graphRef = null, inputsRef = nu
             const years = formValues.years || 0
             const contrib = formValues.contrib || 0
             const contribInflation = formValues.contribInflation || 0
+            const timing = formValues.timing || 'final'
             const freqMap = { anualmente: 'Anualmente', mensualmente: 'Mensualmente', quincenalmente: 'Quincenalmente', semanalmente: 'Semanalmente', diariamente: 'Diariamente' }
             const freqLabel = freqMap[formValues.frequency] || formValues.frequency || 'Anualmente'
+            const timingLabel = timing === 'inicio' ? 'Al inicio del periodo' : 'Al final del periodo'
 
             summaryRows.push(['Depósito inicial', `$${mf.format(deposit)}`])
             summaryRows.push(['Tasa anual', `${rate}%`])
             summaryRows.push(['Años', `${years} ${years === 1 ? 'año' : 'años'}`])
             summaryRows.push(['Frecuencia', freqLabel])
+            summaryRows.push(['Momento del pago', timingLabel])
             summaryRows.push(['Aportación periódica', `$${mf.format(contrib)}`])
             summaryRows.push(['Incremento % aportación', `${contribInflation}%`])
         } else if (inputsRef && inputsRef.current) {

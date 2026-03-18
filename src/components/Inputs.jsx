@@ -167,6 +167,88 @@ function InputsInner({ onValuesChange, initialValues = {} }, ref) {
         );
     }
 
+    function CustomSelectTiming() {
+        const options = [
+            { value: 'inicio', label: 'Al inicio (anticipado)' },
+            { value: 'final', label: 'Al final (vencido)' }
+        ];
+
+        const [open, setOpen] = useState(false);
+        const [selected, setSelected] = useState(() => {
+            const found = options.find(o => o.value === initialValues.timing);
+            return found || options[1];
+        });
+        const ref = useRef(null);
+        const overlayRef = useRef(null);
+
+        useEffect(() => {
+            function onDocClick(e) {
+                if (ref.current && !ref.current.contains(e.target) && overlayRef.current && !overlayRef.current.contains(e.target)) setOpen(false);
+            }
+            function onScrollResize() {
+                setOpen(false);
+            }
+            document.addEventListener('click', onDocClick);
+            window.addEventListener('scroll', onScrollResize, true);
+            window.addEventListener('resize', onScrollResize);
+            return () => {
+                document.removeEventListener('click', onDocClick);
+                window.removeEventListener('scroll', onScrollResize, true);
+                window.removeEventListener('resize', onScrollResize);
+            };
+        }, []);
+
+        const triggerClass = `cs-trigger ${open ? 'open' : ''}`;
+
+        useEffect(() => {
+            if (!open) {
+                if (overlayRef.current) {
+                    document.body.removeChild(overlayRef.current);
+                    overlayRef.current = null;
+                }
+                return;
+            }
+
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.zIndex = 9999;
+            overlayRef.current = overlay;
+            document.body.appendChild(overlay);
+
+            const rect = ref.current.getBoundingClientRect();
+            overlay.style.left = rect.left + 'px';
+            overlay.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+            overlay.style.width = rect.width + 'px';
+
+            overlay.innerHTML = `<ul class="cs-options" style="margin:0;">${options.map(opt => `<li class="cs-option">${opt.label}</li>`).join('')}</ul>`;
+
+            const lis = overlay.querySelectorAll('.cs-option');
+            lis.forEach((li, idx) => {
+                li.addEventListener('click', () => {
+                    setSelected(options[idx]);
+                    if (typeof onValuesChange === 'function') onValuesChange({ timing: options[idx].value });
+                    setOpen(false);
+                });
+            });
+
+            return () => {
+                if (overlayRef.current) {
+                    document.body.removeChild(overlayRef.current);
+                    overlayRef.current = null;
+                }
+            };
+        }, [open]);
+
+        return (
+            <div className="custom-select" ref={ref}>
+                <button type="button" className={triggerClass} onClick={() => setOpen(v => !v)}>
+                    <span>{selected.label}</span>
+                    <img src={selectArrow} alt="arrow" className="cs-arrow" />
+                </button>
+            </div>
+        );
+    }
+
     // Calcular los valores de visualización antes del return para mantener el return sin lógica
     // depositDisplay: mientras el input está enfocado muestra depositRaw (solo dígitos),
     // al perder foco muestra la versión formateada con '$' y separador de miles.
@@ -258,6 +340,17 @@ function InputsInner({ onValuesChange, initialValues = {} }, ref) {
                 </label>
                 {/* Custom select to ensure neumorphism styling for options */}
                 <CustomSelect />
+            </div>
+
+            <div className="input-group">
+                <label>
+                    <img src={calendarIcon} alt="calendar" className="input-icon" />
+                    Comienzo del pago
+                    <span className="info-icon" title="Momento en que se realizan las aportaciones en cada periodo.">
+                        <img src={infoIcon} alt="info" className="icon-img" />
+                    </span>
+                </label>
+                <CustomSelectTiming />
             </div>
 
             <div className="input-group">

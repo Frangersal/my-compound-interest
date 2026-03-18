@@ -249,7 +249,7 @@ input[type="number"] {
 /* Limitar la altura total de cada columna para evitar comportamientos inesperados al redimensionar */
 .content-left,
 .content-right {
-    max-height: 610px; 
+    max-height: 680px; 
 }
 
 /* Permitir scroll interno si el contenido excede la altura máxima */

@@ -15,7 +15,7 @@ Chart.register(...registerables)
 // precisión financiera exacta (por ejemplo, tratamiento de aportes al principio
 // de periodo o intereses prorrateados con mayor exactitud), lo podemos ajustar.
 // IMPORTANTE: los colores de los datasets se mantienen tal como estaban (no los cambiamos).
-function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, contribInflation = 0, frequency = 'anualmente' }) {
+function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, contribInflation = 0, frequency = 'anualmente', timing = 'final' }) {
     const labels = []
     const depositSeries = []
     const contribSeries = []
@@ -46,12 +46,20 @@ function computeSeries({ deposit = 1000, rate = 8, years = 5, contrib = 0, contr
     for (let y = 1; y <= Number(years); y++) {
         // Capitalizamos a través de m periodos dentro del año
         for (let p = 0; p < m; p++) {
+            if (timing === 'inicio') {
+                balance += contribYear
+                totalContrib += contribYear
+            }
+            
             const periodRate = r / m
             // Acumulamos el interés sobre el saldo actual
             balance = balance * (1 + periodRate)
-            // Añadimos la contribución del periodo (usando la contribución de este año)
-            balance = balance + contribYear
-            totalContrib += contribYear
+            
+            if (timing !== 'inicio') {
+                // Añadimos la contribución del periodo (usando la contribución de este año)
+                balance = balance + contribYear
+                totalContrib += contribYear
+            }
         }
 
         labels.push(`Año ${y}`)

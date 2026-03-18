@@ -10,7 +10,7 @@ import PdfExporter from './PdfExporter'
 // recibidos desde el formulario. Calcula el balance final aproximado usando
 // la misma lógica de capitalización por periodos que el gráfico (simplificada).
 export default function Results({ values = {}, graphRef = null, inputsRef = null }) {
-    const { deposit = 0, rate = 0, years = 0, contrib = 0, contribInflation = 0, frequency = 'anualmente' } = values
+    const { deposit = 0, rate = 0, years = 0, contrib = 0, contribInflation = 0, frequency = 'anualmente', timing = 'final' } = values
 
     // Convertir tasa anual a decimal y periodos por año
     const r = Number(rate) / 100
@@ -35,13 +35,22 @@ export default function Results({ values = {}, graphRef = null, inputsRef = null
 
         // Por cada periodo dentro del año: aplicar interés y luego sumar aportación
         for (let p = 0; p < m; p++) {
+            if (timing === 'inicio') {
+                balance += contribYear
+                yearContrib += contribYear
+                totalContrib += contribYear
+            }
+            
             const before = balance
             balance = balance * (1 + r / m)
             const interest = balance - before
             yearInterest += interest
-            balance = balance + contribYear
-            yearContrib += contribYear
-            totalContrib += contribYear
+            
+            if (timing !== 'inicio') {
+                balance += contribYear
+                yearContrib += contribYear
+                totalContrib += contribYear
+            }
         }
 
         const endBalance = balance

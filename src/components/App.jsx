@@ -12,7 +12,8 @@ function App() {
     years: 20,
     contrib: 10000,
     contribInflation: 5,
-    frequency: 'anualmente'
+    frequency: 'anualmente',
+    timing: 'final'
   })
 
   const graphRef = useRef(null)
