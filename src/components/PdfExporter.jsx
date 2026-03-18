@@ -234,8 +234,6 @@ export default function PdfExporter({ targetRef, graphRef = null, inputsRef = nu
     }
 
     return (
-        <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'flex-end' }}>
-            <button type="button" className={className || 'btn-download'} onClick={handleDownloadPDF}>{buttonText}</button>
-        </div>
+        <button type="button" className={className || 'btn-download'} onClick={handleDownloadPDF}>{buttonText}</button>
     )
 }

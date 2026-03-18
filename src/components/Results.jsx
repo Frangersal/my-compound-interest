@@ -5,6 +5,7 @@ import depositosIcon from '../assets/icons/depositos.svg'
 import interesIcon from '../assets/icons/interes.svg'
 import totalIcon from '../assets/icons/total.svg'
 import PdfExporter from './PdfExporter'
+import ExcelExporter from './ExcelExporter'
 
 // Componente simple que muestra un resumen de resultados basado en los valores
 // recibidos desde el formulario. Calcula el balance final aproximado usando
@@ -158,7 +159,10 @@ export default function Results({ values = {}, graphRef = null, inputsRef = null
                         </table>
                     </div>
 
-                    <PdfExporter targetRef={cardRef} graphRef={graphRef} inputsRef={inputsRef} formValues={values} className="btn-download" />
+                    <div className="export-buttons">
+                        <PdfExporter targetRef={cardRef} graphRef={graphRef} inputsRef={inputsRef} formValues={values} className="btn-download" />
+                        <ExcelExporter formValues={values} yearsData={yearsData} graphRef={graphRef} className="btn-download" />
+                    </div>
                 </div>
             </div>
         </div>

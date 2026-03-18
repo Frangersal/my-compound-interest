@@ -189,6 +189,23 @@
     font-size: 0.98rem;
 }
 
+.export-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    flex-wrap: wrap; 
+}
+
+.export-buttons .btn-download {
+    width: 250px; /* Forzamos un ancho fijo e idéntico para ambos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+}
+
 /* Botón de descarga PDF */
 .btn-download {
     background: #e0e5ec;
