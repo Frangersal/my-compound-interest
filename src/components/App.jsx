@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <div className="container">
+      <main className="container">
         <h1 className='title'>Calculadora de Interes Compuesto 💸</h1>
         <p className="lead">El interés compuesto es el interés calculado sobre el capital inicial más los intereses previamente generados; es decir, los intereses también generan intereses con el tiempo, lo que acelera el crecimiento del ahorro o la inversión.</p>
         <div className="content">
@@ -48,7 +48,7 @@ function App() {
           Para obtener orientación financiera adecuada, consulte con un especialista certificado.
         </p>
 
-      </div>
+      </main>
       <Footer />
     </>
   )

@@ -107,7 +107,7 @@ export default function Results({ values = {}, graphRef = null, inputsRef = null
     return (
         <div className="content-bottom">
             <div className="results-card" ref={cardRef}>
-                <h3>Resultados</h3>
+                <h2>Resultados</h2>
                 <div className="results-grid">
                     <div className="result-item result-inicial">
                         <div className="label">Depósito inicial</div>
@@ -133,7 +133,7 @@ export default function Results({ values = {}, graphRef = null, inputsRef = null
 
                 {/* Tabla de desglose anual debajo de los result-items */}
                 <div className="results-table-wrapper">
-                    <h4>Desglose anual</h4>
+                    <h3>Desglose anual</h3>
                     <div className="table-responsive">
                         <table className="table table-sm table-striped table-hover results-table">
                             <thead>
